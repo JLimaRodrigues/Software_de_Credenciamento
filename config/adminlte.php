@@ -320,12 +320,12 @@ return [
         // ],
         [
             'text'        => 'Pessoal',
-            'url'         => 'admin/pages',
+            'url'         => 'usuario',
             'icon'        => 'far fa-fw fa-address-card'
         ],
         [
             'text'        => 'Relatórios',
-            'url'         => 'admin/pages',
+            'url'         => 'relatorio',
             'icon'        => 'far fa-fw fa-file'
         ],
         ['header' => 'account_settings'],

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Enums\Usuario\{PerfilUsuario, StatusUsuario};
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
 

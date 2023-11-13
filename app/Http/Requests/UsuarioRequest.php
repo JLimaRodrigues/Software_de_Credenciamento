@@ -24,10 +24,12 @@ class UsuarioRequest extends FormRequest
         return [
             'nome'         => 'required|min:3',
             'cpf'          => 'required|min:11|max:11|unique:usuarios',
-            'nr_inscricao' => 'required|min:11|max:12',
+            'nr_inscricao' => 'required|min:3|max:12|unique:usuarios',
+            'perfil'       => 'required',
+            'status'       => 'required',
             'nome_empresa' => 'required|min:5',
             'email' => 'required|unique:usuarios',
-            'senha' => 'required|min:8'
+            'senha' => 'required|min:4'
         ];
     }
 }
