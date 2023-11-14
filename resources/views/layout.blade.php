@@ -13,6 +13,9 @@
 @stop
 
 @section('js')
+
+    <script src="{{ asset('Libs/eModal.min.js') }}"></script>
+    
     <!--DATATABLE-->
     <!-- <script src="{{ asset('Libs/Datatable/jquery.dataTables.js') }}"></script> -->
     <script src="{{ asset('Libs/Datatable/1.13.7/jquery-3.7.0.js') }}"></script>
@@ -22,5 +25,5 @@
     <script src="{{ asset('Libs/Datatable/1.13.7/ajax/libs/pdfmake/0.1.53/pdfmake.min.js') }}"></script>
     <script src="{{ asset('Libs/Datatable/1.13.7/ajax/libs/pdfmake/0.1.53/vfs_fonts.js') }}"></script>
     <script src="{{ asset('Libs/Datatable/1.13.7/buttons/2.4.2/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('Libs/eModal.min.js') }}"></script>
+    
 @stop

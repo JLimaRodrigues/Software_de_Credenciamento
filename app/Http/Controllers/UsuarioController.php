@@ -41,7 +41,7 @@ class UsuarioController extends Controller
             return back();
         }
         //dd($usuario->nome);
-        return view('usuarios/dadosUsuario', compact('usuario'));
+        return view('usuarios.dadosUsuario', compact('usuario'));
     }
 
     public function registrar(Request $request, Usuario $usuario)

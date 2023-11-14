@@ -1,7 +1,5 @@
 @extends('layout')
 
-@section('title', 'LAFTECH')
-
 @section('content_header')
     <h1>Dados Individual do Usuário</h1>
 @stop

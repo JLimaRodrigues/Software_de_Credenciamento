@@ -319,6 +319,11 @@ return [
         //     'label_color' => 'success',
         // ],
         [
+            'text'        => 'Evento',
+            'url'         => 'evento',
+            'icon'        => 'fas fa-industry'
+        ],
+        [
             'text'        => 'Pessoal',
             'url'         => 'usuario',
             'icon'        => 'far fa-fw fa-address-card'
