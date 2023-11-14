@@ -1,5 +1,7 @@
 @extends('adminlte::page')
 
+@section('title', 'Empresa Anonima')
+
 @section('css')
     <!--DATATABLE-->
     <link rel="stylesheet" href="{{ asset('Libs/Datatable/jquery.dataTables.min.css') }}" />

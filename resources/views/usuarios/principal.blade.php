@@ -1,7 +1,5 @@
 @extends('layout')
 
-@section('title', 'LAFTECH')
-
 @section('content_header')
     <h1>Lista de pessoal cadastrado</h1>
 @stop
