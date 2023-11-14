@@ -15,7 +15,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <table id="tabelaDatatable"><thead>
+                <table id="tabelaDatatable" width="100%"><thead>
             <tr>
                 <th>Ações</th>
                 <th>Nome</th>
@@ -45,8 +45,13 @@
   <script>
     $(document).ready( function () {
     $('#tabelaDatatable').DataTable({
-        processing: true,
-        serverSide: false
+      dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]
     });
 } );
 </script>
