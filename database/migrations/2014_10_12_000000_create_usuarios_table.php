@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Enums\Usuario\{PerfilUsuario, StatusUsuario};
 
 return new class extends Migration
 {
@@ -17,8 +16,8 @@ return new class extends Migration
             $table->string('nome');
             $table->string('cpf', 11)->unique();
             $table->string('nr_inscricao', 12)->unique();
-            $table->enum('perfil', array_column(PerfilUsuario::cases(), 'name'));
-            $table->enum('status', array_column(StatusUsuario::cases(), 'name'));
+            $table->enum('perfil', [1, 2, 3]);
+            $table->enum('status', [0, 1]);
             $table->string('nome_empresa')->nullable();
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
