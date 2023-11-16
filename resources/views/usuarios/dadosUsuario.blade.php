@@ -10,6 +10,7 @@
                 <span class="text-muted">Dados individuais de <b>{{ $usuario->nome }}</b></span>
                 <div class="card-tools">
                   <a href="#" title="Imprimir Crachá" class="btn btn-success"><i class="fas fa-plus"></i> Imprimir o Crachá</a>
+                  <a href="#" title="Editar Dados" class="btn btn-warning" onclick="eModal.ajax('{{ route('usuario.editar', $usuario->id) }}', 'Editar dados')"><i class="fas fa-pen"></i> Editar</a>
                 </div>
               </div>
               <div class="card-body">

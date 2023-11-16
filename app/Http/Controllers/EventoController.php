@@ -9,7 +9,7 @@ class EventoController extends Controller
 {
     public function index(Eventos $evento)
     {
-        $eventos = $evento->all();
+        $eventos = $evento->all()->sortByDesc('dt_evento');
 
         return view('eventos.index', compact('eventos'));
     }

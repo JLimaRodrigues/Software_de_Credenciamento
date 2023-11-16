@@ -10,7 +10,10 @@ class UsuarioController extends Controller
     public function index(Usuario $usuario)
     {
         
-        $usuarios = $usuario->all();
+        $usuarios = $usuario->all()->sortBy([
+            ['nome', 'asc'], //nome em ordem alfabética
+            ['created_at', 'desc'] //data de criação
+        ]);
 
         return view('usuarios.principal', compact('usuarios'));
     }
@@ -20,14 +23,24 @@ class UsuarioController extends Controller
 
     }
 
-    public function atualizar()
+    public function editar(Usuario $usuario, string|int $id)
     {
+        if(!$usuario = Usuario::find($id)){
+            return back();
+        }
 
+        return view('usuarios.editar', compact('usuario'));
     }
 
-    public function editar()
+    public function atualizar(Request $request, Usuario $usuario, string|int $id)
     {
+        if(!$usuario = Usuario::find($id)){
+            return back();
+        }
 
+        $usuario->update($request->all());
+
+        return redirect()->route('usuario.mostrar', $id);
     }
 
     public function criar()
@@ -40,14 +53,13 @@ class UsuarioController extends Controller
         if(!$usuario = Usuario::find($id)){
             return back();
         }
-        //dd($usuario->nome);
+        
         return view('usuarios.dadosUsuario', compact('usuario'));
     }
 
     public function registrar(Request $request, Usuario $usuario)
     {
-        //dd($request->only(['nome', 'cpf', 'nr_inscricao', 'nome_empresa', 'email', 'senha']));
-
+        
         $data = $request->all();
         $data['perfil'] = 'Usuario';
         $data['status'] = 'A'; 
