@@ -26,6 +26,7 @@ Route::get('/evento', [EventoController::class, 'index'])->name('evento.index');
 
 //Rotas de Controle de Usuários
 Route::delete('/usuario/{id}', [UsuarioController::class, 'deletar'])->name('usuario.deletar');
+Route::get('/usuario/excluir/{id}', [UsuarioController::class, 'excluir'])->name('usuario.excluir');
 Route::put('/usuario/{id}', [UsuarioController::class , 'atualizar'])->name('usuario.atualizar');
 Route::get('/usuario/{id}/editar', [UsuarioController::class, 'editar'])->name('usuario.editar');
 Route::get('/usuario/criar', [UsuarioController::class, 'criar'])->name('usuario.criar');

@@ -24,7 +24,10 @@
         </thead>
         @foreach($usuarios as $usuario)
             <tr>
-                <td><a class="btn btn-info" title="Ações" href="{{ route('usuario.mostrar', $usuario->id ) }}"><i class="fa fa-cog"></i></a></td>
+                <td>
+                  <a class="btn btn-info btn-sm" title="Ver Detalhes" href="{{ route('usuario.mostrar', $usuario->id ) }}"><i class="fa fa-cog"></i></a>
+                  <a class="btn btn-danger btn-sm" title="Excluir Usuário" onclick="eModal.ajax('{{ route('usuario.excluir', $usuario->id ) }}', 'Excluir Pessoa')"><i class="fas fa-times"></i></a>
+                </td>
                 <td>{{ $usuario['nome'] }}</td>
                 <td>{{ $usuario['cpf'] }}</td>
                 <td>{{ $usuario['nr_inscricao'] }}</td>
@@ -43,6 +46,7 @@
   <script>
     $(document).ready( function () {
     $('#tabelaDatatable').DataTable({
+      responsive: true,
       dom: 'Bfrtip',
         buttons: [
             'copyHtml5',
