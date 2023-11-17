@@ -43,12 +43,39 @@
     $(document).ready( function () {
     $('#tabelaDatatable').DataTable({
       dom: 'Bfrtip',
-        buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-        ]
+      lengthMenu: [
+              [10, 25, 50, -1],
+              [10, 25, 50, 'All']
+      ],
+      buttons: [
+          'pageLength',
+          'copyHtml5',
+          'excelHtml5',
+          'csvHtml5',
+          'pdfHtml5'
+      ],
+      language: {
+                  processing:     "Processando...",
+                  search:         "Pesquisar:",
+                  lengthMenu:     "Mostrar _MENU_ Registros por página",
+                  info:           "Exibição de _START_ a _END_ em _TOTAL_ registros.",
+                  infoEmpty:      "Exibição de 0 a 0 de 0 registros.",
+                  infoFiltered:   "(Filtrado por _MAX_ itens no total)",
+                  infoPostFix:    "",
+                  loadingRecords: "Carregando...",
+                  zeroRecords:    "Nenhum registro para exibir",
+                  emptyTable:     "Não há registros para exibir na tabela.",
+                  paginate: {
+                      first:      "Primeiro",
+                      previous:   "Anterior",
+                      next:       "Próximo",
+                      last:       "Último"
+                  },
+                  aria: {
+                      sortAscending:  ": habilitar para classificar a coluna em ordem crescente",
+                      sortDescending: ": habilitar para classificar a coluna em ordem decrescente"
+                  }
+        }
     });
 } );
 </script>
