@@ -23,13 +23,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('permission', function(User $user){
-            if($user->permission == 2){
-                return 'Admin';
-            } else if($user->permission == 1){
-                return 'Cadastrador';
-            } else {
-                return 'Usuário Comum';
-            }
+            return $user->permission == 'admin';
         });
     }
 }

@@ -46,7 +46,7 @@ Route::prefix('usuario')->group(function () {
     Route::get('/{id}', [UsuarioController::class, 'mostrar'])->name('usuario.mostrar');
     Route::post('/', [UsuarioController::class, 'registrar'])->name('usuario.registrar');
     Route::get('/', [UsuarioController::class, 'index'])->name('usuario.index');
-});
+})->middleware('can:permission');
 
 
 //Rotas de Controle de Relatórios

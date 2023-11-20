@@ -7,7 +7,7 @@
 @section('content')
 <div class="card">
               <div class="card-header">
-                <span class="text-muted">Lista de pessoal cadastrado para o evento Tal</span>
+                <span class="text-muted">Lista de pessoal cadastrado para o evento Tal @can('permission'), Olá {{ Auth::user()->name }} @endcan </span>
                 <div class="card-tools">
                   <a href="#" title="Cadastrar Pessoa" class="btn btn-success" onclick="eModal.ajax('{{ route('usuario.criar') }}', 'Cadastro de Pessoa')"><i class="fas fa-plus"></i> Nova Pessoa</a>
                 </div>

@@ -322,13 +322,13 @@ return [
             'text'        => 'Evento',
             'url'         => 'evento',
             'icon'        => 'fas fa-industry',
-            'can'         => 'Cadastrador',
+            'can'         => 'permission',
         ],
         [
             'text'        => 'Pessoal',
             'url'         => 'usuario',
             'icon'        => 'far fa-fw fa-address-card',
-            'can'         => 'Admin',
+            'can'         => 'permission',
         ],
         [
             'text'        => 'Relatórios',
