@@ -2,33 +2,23 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-
-class Usuario extends Authenticatable
+class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'nome',
-        'cpf',
-        'nr_inscricao',
-        'nome_empresa',
+        'name',
         'email',
-        'password',
+        'password'
     ];
 
-    /**
+     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
@@ -45,13 +35,6 @@ class Usuario extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'senha' => 'hashed',
+        'password' => 'hashed',
     ];
-
-    public function status(): Attribute
-    {
-        return Attribute::make(
-            set: fn (SuporteStatus $status) => $status->name
-        );
-    }
 }
