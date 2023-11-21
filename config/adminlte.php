@@ -338,12 +338,12 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'perfil',
-            'url'  => 'admin/configuracoes',
+            'url'  => 'profile',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'change_password',
-            'url'  => 'admin/settings',
+            'onclick'  => '',
             'icon' => 'fas fa-fw fa-lock',
         ],
         // [
