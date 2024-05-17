@@ -10,6 +10,7 @@
     "@types/node": "^16.18.97",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
+    "axios": "^1.6.8",
     "electron": "^30.0.6",
     "electron-forge": "^5.2.4",
     "express": "^4.19.2",
@@ -24,6 +25,7 @@
     "build:web": "cross-env PUBLIC_URL=./ react-scripts build",
     "build:desktop": "tsc -p electron/tsconfig.json",
     "start:desktop": "npm run build:desktop && electron ./build/electron.js",
+    "start:server": "node ./src/backend/server.ts",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
