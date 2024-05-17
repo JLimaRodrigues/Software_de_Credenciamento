@@ -1,0 +1,58 @@
+.card {
+    background-color: #333;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    text-align: center;
+}
+
+/* Estilos dos inputs e do botão */
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+
+input {
+    background-color: #444;
+    color: #fff;
+}
+
+button {
+    background-color: #555;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #666;
+}
+
+/* Estilos para o label dentro dos inputs */
+.input-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label {
+    top: -20px;
+    left: 10px;
+    font-size: 12px;
+    color: #888;
+}
+
+label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}

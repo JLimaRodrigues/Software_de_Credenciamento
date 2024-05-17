@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.3.0",
     "electron": "^30.0.6",
     "electron-forge": "^5.2.4",
+    "express": "^4.19.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
