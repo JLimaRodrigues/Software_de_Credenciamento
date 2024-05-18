@@ -1,9 +1,10 @@
 import Dexie from 'dexie';
 
 export interface Pessoa {
+  login?: string;
+  senha?: string;
   nome: string;
-  sobrenome: string;
-  idade: number;
+  cpf: string;
 }
 
 class MyDatabase extends Dexie {
@@ -12,9 +13,10 @@ class MyDatabase extends Dexie {
   public constructor() {
     super('MyDatabase');
     this.version(1).stores({
-      pessoas: '++id, nome, sobrenome, idade'
+      pessoas: '++id, login, senha, nome, cpf'
     });
     this.pessoas = this.table('pessoas');
+    this.table('pessoas').add({login: 'admin', senha: '1234', nome: 'Jefferson', cpf: '1234'});
   }
 }
 

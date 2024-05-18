@@ -1,24 +1,22 @@
 import React, { useState } from "react";
-import { addPessoa, getPessoas, syncWithServer } from "../../dataService";
-import { Pessoa } from "../../db";
+import { addPessoa, getPessoas, syncWithServer, auth } from "../../backend/dataService";
+import { Pessoa } from "../../backend/db";
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [pessoas, setPessoas] = useState<Pessoa[]>([]);
+    const [pessoa, setPessoa] = useState<Pessoa | null>(null);
 
     const handleLogin = async () => {
         try {
-            addPessoa({nome: 'Teste', sobrenome: 'teste',idade: 23});
-            addPessoa({nome: 'teste2', sobrenome: 'teste',idade: 27});
-            addPessoa({nome: 'teste3', sobrenome: 'teste',idade: 26});
-            const data = await getPessoas();
-            setPessoas(data);
-            console.log('Pessoas:', data);
+            //const data = await getPessoas();
+            const data = await auth(username, password);
+            setPessoa(data);
         } catch (error) {
             console.warn('Erro: ', error);
         }
        console.log(`Login: ${username}, Senha: ${password}`);
+       console.log('Pessoa:', pessoa);
       };
 
     return (

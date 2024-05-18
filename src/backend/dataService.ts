@@ -1,6 +1,19 @@
 import { db, Pessoa } from './db';
 import axios from 'axios';
 
+export async function auth(username: string, password: string): Promise<Pessoa | null> {
+  try {
+    const pessoa = await db.pessoas.get({ 'login': username, 'senha': password });
+    if (!pessoa) {
+      return null;
+    }
+    return pessoa;
+  } catch (error) {
+    //console.error('Erro ao buscar pessoa:', error);
+    return null;
+  }
+}
+
 export async function addPessoa(pessoa: Pessoa): Promise<void> {
   await db.pessoas.add(pessoa);
 }
