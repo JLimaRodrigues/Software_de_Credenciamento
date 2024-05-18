@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import { addPessoa, getPessoas, syncWithServer, auth } from "../../backend/dataService";
+import { useNavigate } from "react-router-dom";
 import { Pessoa } from "../../backend/db";
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [pessoa, setPessoa] = useState<Pessoa | null>(null);
+    let navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
-            //const data = await getPessoas();
             const data = await auth(username, password);
-            setPessoa(data);
+            if (data) {
+                setPessoa(data);
+                navigate('/home')
+            } else {
+                console.warn('Usuário ou senha inválidos');
+            }
         } catch (error) {
             console.warn('Erro: ', error);
         }
-       console.log(`Login: ${username}, Senha: ${password}`);
-       console.log('Pessoa:', pessoa);
       };
 
     return (
