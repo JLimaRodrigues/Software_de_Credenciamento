@@ -4,8 +4,10 @@ import './styles.css';
 
 function LoginPage() {
   return (
-    <div className='card'>
-      <Login />
+    <div className='container'>
+      <div className='card'>
+        <Login />
+      </div>
     </div>
   );
 }
