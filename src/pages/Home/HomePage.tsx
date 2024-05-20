@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
+    let navigate = useNavigate();
+
+    const LinkUsers = async () => {
+       return navigate('/users')
+    };
+
     return (
         <div>
             <h2>Home Page</h2>
             <p>Bem-vindo à Home Page!</p>
+            <button onClick={LinkUsers}>Vamos para a lista de usuários</button>
         </div>
     );
 }

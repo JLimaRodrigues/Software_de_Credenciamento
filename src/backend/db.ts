@@ -1,6 +1,7 @@
 import Dexie from 'dexie';
 
 export interface Pessoa {
+  id: number,
   login?: string;
   senha?: string;
   nome: string;
@@ -16,7 +17,6 @@ class MyDatabase extends Dexie {
       pessoas: '++id, login, senha, nome, cpf'
     });
     this.pessoas = this.table('pessoas');
-    this.table('pessoas').add({login: 'admin', senha: '1234', nome: 'Jefferson', cpf: '1234'});
   }
 }
 
