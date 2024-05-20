@@ -1,12 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faTimes, faUser } from '@fortawesome/free-solid-svg-icons';
 import './styles.css';
+import SideBarItem from '../SideBarItem';
 
-const SideBar: React.FC<{ active: boolean, setActive: (active: boolean) => void }> = ({ active, setActive }) => {
-    let navigate = useNavigate();
+interface SideBarProps {
+    active: boolean;
+    setActive: (active: boolean) => void;
+}
 
+const SideBar: React.FC<SideBarProps> = ({ active, setActive }) => {
     const closeSidebar = () => {
         setActive(false);
     }
@@ -15,7 +18,8 @@ const SideBar: React.FC<{ active: boolean, setActive: (active: boolean) => void 
         <div className={`container-menu ${active ? 'show' : ''}`}>
             <FontAwesomeIcon icon={faTimes} className="close-icon" onClick={closeSidebar} />
             <div className="container-content">
-                {/* Conteúdo do menu vazio */}
+                <SideBarItem Icon={faHome} Text="Home" href="/home" />
+                <SideBarItem Icon={faUser} Text="Usuários" href="/users" />
             </div>
         </div>
     );
