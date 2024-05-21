@@ -1,6 +1,6 @@
 import React from 'react';
-import User from '../../components/Users/User';
-import Header from '../Header/Header';
+import User from '../../components/Users';
+import Header from '../Header';
 
 const UsersPage: React.FC = () => {
    
