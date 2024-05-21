@@ -14,6 +14,18 @@ export async function auth(username: string, password: string): Promise<Pessoa |
   }
 }
 
+export async function getPessoa(id: number): Promise<Pessoa | null>{
+  const pessoa = await db.pessoas.get({"id": id});
+  if (!pessoa) {
+    return null;
+  }
+  return pessoa;
+}
+
+export async function deletePessoa(id: number): Promise<void> {
+  return await db.pessoas.delete(id);
+}
+
 export async function addPessoa(pessoa: Pessoa): Promise<void> {
   await db.pessoas.add(pessoa);
 }
