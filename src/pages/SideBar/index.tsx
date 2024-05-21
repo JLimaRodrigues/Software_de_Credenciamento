@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faTimes, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck, faHome, faTimes, faUser } from '@fortawesome/free-solid-svg-icons';
 import './styles.css';
 import SideBarItem from '../SideBarItem';
 
@@ -20,6 +20,7 @@ const SideBar: React.FC<SideBarProps> = ({ active, setActive }) => {
             <div className="container-content">
                 <SideBarItem Icon={faHome} Text="Home" href="/home" />
                 <SideBarItem Icon={faUser} Text="Usuários" href="/users" />
+                <SideBarItem Icon={faCalendarCheck} Text="Eventos" href="/events" />
             </div>
         </div>
     );
