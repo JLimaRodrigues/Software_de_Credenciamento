@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import TableUsers from "./TableUsers";
 import FormNewUser from "./FormNewUser";
-import Button from 'react-bootstrap/Button';
 import './styles.css';
 
 const User: React.FC = () => {
@@ -18,9 +17,9 @@ const User: React.FC = () => {
             <div className="tabela-usuarios">
                 <TableUsers />
             </div>
-            <Button variant="primary" onClick={handleShow}>
-                Add New User
-            </Button>
+            <button onClick={handleShow}>
+                New User
+            </button>
             <FormNewUser show={show} handleClose={handleClose} />
         </>
     );
