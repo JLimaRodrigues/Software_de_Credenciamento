@@ -22,10 +22,10 @@ const Login: React.FC = () => {
                 localStorage.setItem('user', JSON.stringify(pessoa));
                 navigate('/home');
             } else {
-                console.warn('Usuário ou senha inválidos');
+                toast.error('Usuário ou senha inválidos');
             }
         } catch (error) {
-            console.warn('Erro: ', error);
+            toast.error('Erro na requisição');
         }
       };
 
@@ -35,6 +35,8 @@ const Login: React.FC = () => {
             <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <button onClick={handleLogin}>Login</button>
+
+            <ToastContainer />
         </>
     );
 }

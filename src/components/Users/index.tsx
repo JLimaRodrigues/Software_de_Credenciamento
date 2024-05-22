@@ -1,5 +1,6 @@
 import React from "react";
 import TableUsers from "./TableUsers";
+import './styles.css';
 
 const User: React.FC = () => {
 
@@ -7,7 +8,9 @@ const User: React.FC = () => {
         <>
             <h2>Usuários Page</h2>
             <p>Bem-vindo à Usuários Page!</p>
-            <TableUsers />
+            <div className="tabela-usuarios">
+                <TableUsers />
+            </div>
         </>
     );
 }
