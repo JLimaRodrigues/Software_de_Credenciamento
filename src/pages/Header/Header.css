@@ -1,6 +1,8 @@
 .header {
     height: 100px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: #1A202C;
     box-shadow: 0 0 20px 3px;
 }
@@ -9,7 +11,13 @@
     color: white;
     width: 30px;
     height: 30px;
-    margin-top: 32px;
+    margin-top: 12px;
     margin-left: 32px;
     cursor: pointer;
+}
+
+.username {
+    color: white;
+    font-size: 18px;
+    margin: 10px;
 }

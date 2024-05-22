@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+// import { auth } from "./auth";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 import { auth } from "../../backend/dataService";
 import { useNavigate } from "react-router-dom";
 
@@ -9,9 +15,12 @@ const Login: React.FC = () => {
 
     const handleLogin = async () => {
         try {
-            const data = await auth(username, password);
-            if (data) {
-                navigate('/home')
+            //const token = await auth(username, password);
+            const pessoa = await auth(username, password);
+            if (pessoa) {
+                console.log(pessoa);
+                localStorage.setItem('user', JSON.stringify(pessoa));
+                navigate('/home');
             } else {
                 console.warn('Usuário ou senha inválidos');
             }
