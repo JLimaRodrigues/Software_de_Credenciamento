@@ -1,11 +1,11 @@
 import Dexie from 'dexie';
 
 export interface Pessoa {
-  id: number,
-  login?: string;
-  senha?: string;
+  id: number;
   nome: string;
+  login: string | number;
   cpf: string;
+  senha: string;
 }
 
 class MyDatabase extends Dexie {
