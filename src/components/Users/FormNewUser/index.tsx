@@ -3,7 +3,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { addPessoa } from "../../../backend/dataService";
 import { isNotEmpty, isValidEmail, isValidCPF, isValidPassword } from './validate';
-import { Pessoa } from "../../../backend/db";
+import { Pessoa, db } from "../../../backend/db";
 
 
 const FormNewUser: React.FC<{ show: boolean, handleClose: () => void }> = ({ show, handleClose }) => {
@@ -53,11 +53,26 @@ const FormNewUser: React.FC<{ show: boolean, handleClose: () => void }> = ({ sho
             setErrors(validationErrors);
             return;
         }
-        const pessoa: Pessoa = { id: 0, nome: name, login: login, senha: password, cpf: cpf };
-        await addPessoa(pessoa)
-        console.log({ name, login, email, password, cpf });
-        resetForm();
-        handleClose();
+        try {
+            const ultimoRegistro = await db.pessoas.orderBy('id').reverse().first();
+            const novoId = ultimoRegistro ? ultimoRegistro.id + 1 : 1;
+    
+            const pessoa: Pessoa = {
+                id: novoId,
+                nome: name,
+                login: login,
+                senha: password,
+                cpf: cpf
+            };
+    
+            await addPessoa(pessoa);
+    
+            resetForm();
+            handleClose();
+        } catch (error) {
+            console.error("Erro ao registrar a pessoa:", error);
+            // Aqui você pode adicionar um tratamento de erro adicional, como exibir uma mensagem de erro ao usuário.
+        }
     };
 
     if (!show) {

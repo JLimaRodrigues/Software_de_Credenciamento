@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Pessoa } from "../../../backend/db";
+import { Pessoa, db } from "../../../backend/db";
 import { deletePessoa, getPessoa, getPessoas } from "../../../backend/dataService";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
+import { useLiveQuery } from 'dexie-react-hooks';
+
 const TableUsers: React.FC = () => {
 
     const [pessoas, setPessoas] = useState<Pessoa[]>([]);
 
-    useEffect(() => {
-        fetchPessoas();
-    }, [])
+    const pessoasQuery = useLiveQuery(() => db.pessoas.toArray())
+    if(!pessoasQuery) return null;
+
+    // useEffect(() => {
+    //     fetchPessoas();
+    // }, [])
 
     const fetchPessoas = async () => {
         try {
@@ -58,7 +63,7 @@ const TableUsers: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {pessoas.map((row) => (
+              {pessoasQuery.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell>{row.id}</TableCell>
                   <TableCell>{row.nome}</TableCell>
