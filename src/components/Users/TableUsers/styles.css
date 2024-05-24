@@ -11,12 +11,12 @@
   }
   
   .table-header {
-    background-color: #f1f1f1;
+    background-color: #daece249;
     padding: 12px;
-    font-weight: 500;
+    font-weight: 250;
     text-align: left;
-    font-size: 14px;
-    color: #2c3e50;
+    font-size: 30px;
+    color: black;
   }
   
   .table-header:first-child {
@@ -37,6 +37,6 @@
   
   .table-cell {
     padding: 12px;
-    font-size: 14px;
-    color: grey;
+    font-size: 20px;
+    color: black;
   }
