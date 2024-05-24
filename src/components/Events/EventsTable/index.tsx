@@ -1,42 +1,42 @@
 import React, { useState } from 'react';
-import { Pessoa, db } from "../../../backend/db";
-import { deletePessoa } from "../../../backend/dataService";
+import { Evento, db } from "../../../backend/db";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import TableFooter from './TableFooter';
-import useTable from './tools';
-import './styles.css';
+import TableFooter from '../../TableFooter';
+import useTable from '../../tools';
+import '../../Users/UsersTable/styles.css';
 
 import { useLiveQuery } from 'dexie-react-hooks';
 
 
-interface TableUsersProps {
-  onEditUser: (user: Pessoa) => void;
+interface EventsTableProps {
+  onEditEvent: (user: Evento) => void;
 }
 
-const TableUsers: React.FC<TableUsersProps> = ({ onEditUser }) => {
+const EventsTable: React.FC<EventsTableProps> = ({ onEditEvent }) => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const pessoasQuery = useLiveQuery(() => db.pessoas.toArray(), []);
+  const eventosQuery = useLiveQuery(() => db.eventos.toArray(), []);
 
-  const data = pessoasQuery || [];
-  const filteredData = data.filter((pessoa: Pessoa) =>
-    pessoa.nome.toLowerCase().includes(searchTerm.toLowerCase())
+  const data = eventosQuery || [];
+  const filteredData = data.filter((evento: Evento) =>
+    evento.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const { slice, range } = useTable(filteredData, page, rowsPerPage);
 
-  const DeletePessoa = async (id: number): Promise<void> => {
+  const DeleteEvento = async (id: number): Promise<void> => {
     try {
-      await deletePessoa(id);
+      //await DeleteEvento(id);
+      console.log(id)
     } catch (error) {
       console.log('Erro: ', error);
     }
   };
 
-  if (!pessoasQuery) return <div>Loading...</div>;
+  if (!eventosQuery) return <div>Loading...</div>;
 
   return (
     <>
@@ -53,27 +53,27 @@ const TableUsers: React.FC<TableUsersProps> = ({ onEditUser }) => {
           <tr>
             <th className="table-header">ID</th>
             <th className="table-header">Nome</th>
-            <th className="table-header">Login</th>
-            <th className="table-header">CPF</th>
-            <th className="table-header">N° de inscrição</th>
             <th className="table-header">Empresa</th>
+            <th className="table-header">Endereço</th>
+            <th className="table-header">Tipo de Evento</th>
+            <th className="table-header">Qtd Participantes</th>
             <th className="table-header">Ações</th>
           </tr>
         </thead>
         <tbody>
-          {slice.map((el: Pessoa) => (
+          {slice.map((el: Evento) => (
             <tr className="table-rows-item" key={el.id}>
               <td className="table-cell">{el.id}</td>
               <td className="table-cell">{el.nome}</td>
-              <td className="table-cell">{el.login}</td>
-              <td className="table-cell">{el.cpf}</td>
-              <td className="table-cell">-</td>
-              <td className="table-cell">-</td>
+              <td className="table-cell">{el.empresa}</td>
+              <td className="table-cell">{el.endereco}</td>
+              <td className="table-cell">{el.tipo_evento}</td>
+              <td className="table-cell">{el.qtd_participantes}</td>
               <td className="table-cell" style={{ display: 'flex' }}>
-                <button onClick={() => onEditUser(el)} style={{ backgroundColor: '#138dba'}} title='Editar Usuário'>
+                <button onClick={() => onEditEvent(el)} style={{ backgroundColor: '#138dba'}} title='Editar Usuário'>
                   <FontAwesomeIcon icon={faPen} />
                 </button>
-                <button onClick={() => DeletePessoa(el.id)} style={{ backgroundColor: '#ba132c'}} title='Excluir Usuário'>
+                <button onClick={() => DeleteEvento(el.id)} style={{ backgroundColor: '#ba132c'}} title='Excluir Usuário'>
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
               </td>
@@ -92,4 +92,4 @@ const TableUsers: React.FC<TableUsersProps> = ({ onEditUser }) => {
   );
 }
 
-export default TableUsers;
+export default EventsTable;

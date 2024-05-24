@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TableUsers from "./TableUsers";
+import UsersTable from "./UsersTable";
 import UserForm from "./UserForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
@@ -27,7 +27,7 @@ const User: React.FC = () => {
                 <button className="button-add-user" onClick={() => handleShow()}>
                     <FontAwesomeIcon icon={faUserPlus} />
                 </button>
-                <TableUsers onEditUser={handleShow} />
+                <UsersTable onEditUser={handleShow} />
             </div>
             <UserForm show={show} handleClose={handleClose} user={selectedUser} />
         </>
