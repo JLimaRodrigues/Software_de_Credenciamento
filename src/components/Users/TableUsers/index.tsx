@@ -1,132 +1,29 @@
 import React, { useState } from 'react';
 import { Pessoa, db } from "../../../backend/db";
 import { deletePessoa, getPessoa } from "../../../backend/dataService";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableFooter, TablePagination, IconButton, Tooltip, TableSortLabel } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import TablePaginationActions from './PaginationActionsProps';
+
+import TableFooter from './TableFooter';
+import useTable from './tools';
+import './styles.css';
+
 import { useLiveQuery } from 'dexie-react-hooks';
 
-interface HeadCell {
-  disablePadding: boolean;
-  id: keyof Pessoa;
-  label: string;
-  numeric: boolean;
-}
-
-const headCells: readonly HeadCell[] = [
-  { id: 'id', numeric: true, disablePadding: false, label: 'ID' },
-  { id: 'nome', numeric: false, disablePadding: false, label: 'Nome' },
-  { id: 'login', numeric: false, disablePadding: false, label: 'Login' },
-  { id: 'cpf', numeric: false, disablePadding: false, label: 'CPF' },
-  // Adicione mais colunas conforme necessário
-];
-
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-type Order = 'asc' | 'desc';
-
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key,
-): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string },
-) => number {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
-
-interface EnhancedTableHeadProps {
-  order: Order;
-  orderBy: string;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Pessoa) => void;
-}
-
-function EnhancedTableHead(props: EnhancedTableHeadProps) {
-  const { order, orderBy, onRequestSort } = props;
-  const createSortHandler = (property: keyof Pessoa) => (event: React.MouseEvent<unknown>) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span style={{ visibility: 'hidden' }}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-        <TableCell>Ações</TableCell>
-      </TableRow>
-    </TableHead>
-  );
-}
-
 const TableUsers: React.FC = () => {
-  const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof Pessoa>('id');
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const pessoasQuery = useLiveQuery(() => db.pessoas.toArray());
+  const pessoasQuery = useLiveQuery(() => db.pessoas.toArray(), []);
 
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: keyof Pessoa,
-  ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+  const data = pessoasQuery || [];
+  const filteredData = data.filter((pessoa: Pessoa) =>
+    pessoa.nome.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const { slice, range } = useTable(filteredData, page, rowsPerPage);
 
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const updatePessoa = async (id: number): Promise<void> => {
+  const UpdatePessoa = async (id: number): Promise<void> => {
     try {
       const response = await getPessoa(id);
       console.log('Pessoa: ', response);
@@ -135,7 +32,7 @@ const TableUsers: React.FC = () => {
     }
   };
 
-  const deletePessoa = async (id: number): Promise<void> => {
+  const DeletePessoa = async (id: number): Promise<void> => {
     try {
       await deletePessoa(id);
     } catch (error) {
@@ -143,72 +40,59 @@ const TableUsers: React.FC = () => {
     }
   };
 
-  if (!pessoasQuery) return null;
-
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - pessoasQuery.length) : 0;
-
-  const visibleRows = stableSort(pessoasQuery, getComparator(order, orderBy))
-    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  if (!pessoasQuery) return <div>Loading...</div>;
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <EnhancedTableHead
-          order={order}
-          orderBy={orderBy}
-          onRequestSort={handleRequestSort}
+    <>
+      <div className="search-bar">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search by Name..."
         />
-        <TableBody>
-          {visibleRows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.id}</TableCell>
-              <TableCell>{row.nome}</TableCell>
-              <TableCell>{row.login}</TableCell>
-              <TableCell>{row.cpf}</TableCell>
-              <TableCell>-</TableCell>
-              <TableCell>-</TableCell>
-              <TableCell style={{ display: 'flex' }}>
-                <Tooltip title="Editar Usuário">
-                  <IconButton onClick={() => updatePessoa(row.id)} style={{ color: '#138dba' }}>
-                    <FontAwesomeIcon icon={faPen} />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Excluir Usuário">
-                  <IconButton onClick={() => deletePessoa(row.id)} style={{ color: '#ba132c' }}>
-                    <FontAwesomeIcon icon={faTrash} />
-                  </IconButton>
-                </Tooltip>
-              </TableCell>
-            </TableRow>
+      </div>
+      <table className="table">
+        <thead className="table-rows-header">
+          <tr>
+            <th className="table-header">ID</th>
+            <th className="table-header">Nome</th>
+            <th className="table-header">Login</th>
+            <th className="table-header">CPF</th>
+            <th className="table-header">N° de inscrição</th>
+            <th className="table-header">Empresa</th>
+            <th className="table-header">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {slice.map((el: Pessoa) => (
+            <tr className="table-rows-item" key={el.id}>
+              <td className="table-cell">{el.id}</td>
+              <td className="table-cell">{el.nome}</td>
+              <td className="table-cell">{el.login}</td>
+              <td className="table-cell">{el.cpf}</td>
+              <td className="table-cell">-</td>
+              <td className="table-cell">-</td>
+              <td className="table-cell" style={{ display: 'flex' }}>
+                <button onClick={() => UpdatePessoa(el.id)} style={{ backgroundColor: '#138dba'}} title='Editar Usuário'>
+                  <FontAwesomeIcon icon={faPen} />
+                </button>
+                <button onClick={() => DeletePessoa(el.id)} style={{ backgroundColor: '#ba132c'}} title='Excluir Usuário'>
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </td>
+            </tr>
           ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={7} />
-            </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={pessoasQuery.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+        </tbody>
+      </table>
+      <TableFooter
+        range={range}
+        setPage={setPage}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        setRowsPerPage={setRowsPerPage}
+      />
+    </>
   );
 }
 
