@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Pessoa, db } from "../../../backend/db";
-import { deletePessoa, getPessoa } from "../../../backend/dataService";
+import { deletePessoa } from "../../../backend/dataService";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -27,15 +27,6 @@ const TableUsers: React.FC<TableUsersProps> = ({ onEditUser }) => {
     pessoa.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const { slice, range } = useTable(filteredData, page, rowsPerPage);
-
-  const UpdatePessoa = async (id: number): Promise<void> => {
-    try {
-      const response = await getPessoa(id);
-      console.log('Pessoa: ', response);
-    } catch (error) {
-      console.log('Erro: ', error);
-    }
-  };
 
   const DeletePessoa = async (id: number): Promise<void> => {
     try {
