@@ -73,7 +73,13 @@ const TableUsers: React.FC = () => {
           ))}
         </tbody>
       </table>
-      <TableFooter range={range} setPage={setPage} page={page} />
+      <TableFooter
+        range={range}
+        setPage={setPage}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        setRowsPerPage={setRowsPerPage}
+      />
     </>
   );
 }
