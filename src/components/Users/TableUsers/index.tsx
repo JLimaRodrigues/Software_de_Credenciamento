@@ -1,90 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Pessoa, db } from "../../../backend/db";
 import { deletePessoa, getPessoa, getPessoas } from "../../../backend/dataService";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+import TableFooter from './TableFooter';
+import useTable from './tools';
+import './styles.css';
 
 import { useLiveQuery } from 'dexie-react-hooks';
 
 const TableUsers: React.FC = () => {
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    const [pessoas, setPessoas] = useState<Pessoa[]>([]);
+  const pessoasQuery = useLiveQuery(() => db.pessoas.toArray(), []);
 
-    const pessoasQuery = useLiveQuery(() => db.pessoas.toArray())
-    if(!pessoasQuery) return null;
+  const data = pessoasQuery || [];
+  const { slice, range } = useTable(data, page, rowsPerPage);
+  
 
-    // useEffect(() => {
-    //     fetchPessoas();
-    // }, [])
+  const UpdatePessoa = async (id: number): Promise<void> => {
+      try {
+          const response = await getPessoa(id);
+          console.log('Pessoa: ', response)
+      } catch (error) {
+          console.log('Erro: ', error)
+      }
+  }
 
-    const fetchPessoas = async () => {
-        try {
-            const response = await getPessoas();
-            if(response){
-              setPessoas(response);
-            }
-        } catch (error) {
-            console.error('Erro ao buscar dados das pessoas: ', error)
-        }
-    };
-
-    const UpdatePessoa = async (id: number): Promise<void> => {
-        try {
-            const response = await getPessoa(id);
-            console.log('Pessoa: ', response)
-        } catch (error) {
-            console.log('Erro: ', error)
-        }
-    }
-
-    const DeletePessoa = async (id: number): Promise<void> => {
-        try {
-            await deletePessoa(id);
-            fetchPessoas();
-        } catch (error) {
-            console.log('Erro: ', error)
-        }
-    }
+  const DeletePessoa = async (id: number): Promise<void> => {
+      try {
+          await deletePessoa(id);
+      } catch (error) {
+          console.log('Erro: ', error)
+      }
+  }
 
 
-    return (
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Nome</TableCell>
-                <TableCell>Login</TableCell>
-                <TableCell>CPF</TableCell>
-                <TableCell>Nº Inscrição</TableCell>
-                <TableCell>Empresa</TableCell>
-                <TableCell>Ações</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {pessoasQuery.map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell>{row.id}</TableCell>
-                  <TableCell>{row.nome}</TableCell>
-                  <TableCell>{row.login}</TableCell>
-                  <TableCell>{row.cpf}</TableCell>
-                  <TableCell>-</TableCell>
-                  <TableCell>-</TableCell>
-                  <TableCell style={{ display: 'flex' }}>
-                    <button onClick={() => UpdatePessoa(row.id)} style={{ backgroundColor: '#138dba'}} title='Editar Usuário'>
-                        <FontAwesomeIcon icon={faPen} />
+  return (
+        <>
+          <table className="table">
+          <thead className="table-rows-header">
+            <tr>
+              <th className="table-header">ID</th>
+              <th className="table-header">Nome</th>
+              <th className="table-header">Login</th>
+              <th className="table-header">CPF</th>
+              <th className="table-header">N° de inscrição</th>
+              <th className="table-header">Empresa</th>
+              <th className="table-header">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {slice.map((el) => (
+              <tr className="table-rows-item" key={el.id}>
+                <td className="table-cell">{el.id}</td>
+                <td className="table-cell">{el.nome}</td>
+                <td className="table-cell">{el.login}</td>
+                <td className="table-cell">{el.cpf}</td>
+                <td className="table-cell">-</td>
+                <td className="table-cell">-</td>
+                <td className="table-cell" style={{ display: 'flex' }}>
+                    <button onClick={() => UpdatePessoa(el.id)} style={{ backgroundColor: '#138dba'}} title='Editar Usuário'>
+                            <FontAwesomeIcon icon={faPen} />
                     </button>
-                    <button onClick={() => DeletePessoa(row.id)} style={{ backgroundColor: '#ba132c'}} title='Excluir Usuário'>
+                    <button onClick={() => DeletePessoa(el.id)} style={{ backgroundColor: '#ba132c'}} title='Excluir Usuário'>
                         <FontAwesomeIcon icon={faTrash} />
                     </button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      );
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+      </>
+    );
 }
 
 export default TableUsers;

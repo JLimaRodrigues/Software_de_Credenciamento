@@ -16,7 +16,6 @@
 
 /* Estilos dos inputs e do botão */
 input, button {
-    width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
