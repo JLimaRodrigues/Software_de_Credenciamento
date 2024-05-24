@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import './styles.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBackwardStep, faForward, faForwardStep, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 const TableFooter: React.FC<{
   range: number[],
@@ -37,10 +39,10 @@ const TableFooter: React.FC<{
       </div>
       <div className="pagination-controls">
         <button onClick={handleFirstPage} disabled={page === 1} className="button-table">
-          {"<<"}
+            <FontAwesomeIcon icon={faBackwardStep} />
         </button>
         <button onClick={handlePreviousPage} disabled={page === 1} className="button-table">
-          {"<"}
+            <FontAwesomeIcon icon={faPlay} flip="horizontal" />
         </button>
         {range.map((el, index) => (
           (el === page || el === page - 1 || el === page + 1) && (
@@ -54,10 +56,10 @@ const TableFooter: React.FC<{
           )
         ))}
         <button onClick={handleNextPage} disabled={page === range.length} className="button-table">
-          {">"}
+        <FontAwesomeIcon icon={faPlay} />
         </button>
         <button onClick={handleLastPage} disabled={page === range.length} className="button-table">
-          {">>"}
+            <FontAwesomeIcon icon={faForwardStep} />
         </button>
       </div>
     </div>
