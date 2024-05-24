@@ -13,11 +13,15 @@ import { useLiveQuery } from 'dexie-react-hooks';
 const TableUsers: React.FC = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const pessoasQuery = useLiveQuery(() => db.pessoas.toArray(), []);
 
   const data = pessoasQuery || [];
-  const { slice, range } = useTable(data, page, rowsPerPage);
+  const filteredData = data.filter((pessoa: Pessoa) =>
+    pessoa.nome.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const { slice, range } = useTable(filteredData, page, rowsPerPage);
 
   const UpdatePessoa = async (id: number): Promise<void> => {
     try {
@@ -40,6 +44,14 @@ const TableUsers: React.FC = () => {
 
   return (
     <>
+      <div className="search-bar">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search by Name..."
+        />
+      </div>
       <table className="table">
         <thead className="table-rows-header">
           <tr>

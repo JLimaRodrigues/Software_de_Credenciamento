@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const calculateRange = (data: any[], rowsPerPage: number): number[] => {
     const range: number[] = [];
