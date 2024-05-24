@@ -135,3 +135,7 @@
 .error-text {
     font-size: 0.875rem;
 }
+
+.button-add-user {
+    background-color: #399650b2;
+}

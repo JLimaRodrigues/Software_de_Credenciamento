@@ -30,6 +30,11 @@ export async function addPessoa(pessoa: Pessoa): Promise<void> {
   await db.pessoas.add(pessoa);
 }
 
+export async function updatePessoa(pessoa: Pessoa): Promise<void> {
+  const { id, ...updatedFields } = pessoa;
+  await db.pessoas.update(id, updatedFields);
+}
+
 export async function getPessoas(): Promise<Pessoa[]> {
   return await db.pessoas.toArray();
 }

@@ -3,7 +3,8 @@ import Dexie from 'dexie';
 export interface Pessoa {
   id: number;
   nome: string;
-  login: string | number;
+  login: string;
+  email: string;
   cpf: string;
   senha: string;
 }

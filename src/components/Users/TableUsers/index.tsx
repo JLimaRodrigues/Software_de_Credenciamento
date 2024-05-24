@@ -10,7 +10,12 @@ import './styles.css';
 
 import { useLiveQuery } from 'dexie-react-hooks';
 
-const TableUsers: React.FC = () => {
+
+interface TableUsersProps {
+  onEditUser: (user: Pessoa) => void;
+}
+
+const TableUsers: React.FC<TableUsersProps> = ({ onEditUser }) => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,7 +79,7 @@ const TableUsers: React.FC = () => {
               <td className="table-cell">-</td>
               <td className="table-cell">-</td>
               <td className="table-cell" style={{ display: 'flex' }}>
-                <button onClick={() => UpdatePessoa(el.id)} style={{ backgroundColor: '#138dba'}} title='Editar Usuário'>
+                <button onClick={() => onEditUser(el)} style={{ backgroundColor: '#138dba'}} title='Editar Usuário'>
                   <FontAwesomeIcon icon={faPen} />
                 </button>
                 <button onClick={() => DeletePessoa(el.id)} style={{ backgroundColor: '#ba132c'}} title='Excluir Usuário'>
