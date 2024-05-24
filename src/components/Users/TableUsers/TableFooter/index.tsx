@@ -29,7 +29,6 @@ const TableFooter: React.FC<{
   return (
     <div className="table-footer">
         <div className="rows-per-page">
-        <label>Rows Per Page: </label>
         <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
           <option value={5}>5</option>
           <option value={10}>10</option>
