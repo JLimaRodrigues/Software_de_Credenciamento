@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Evento, db } from "../../../backend/db";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { deleteEvent } from '../../../backend/EventsModel';
 
 import TableFooter from '../../TableFooter';
 import useTable from '../../tools';
@@ -29,8 +30,8 @@ const EventsTable: React.FC<EventsTableProps> = ({ onEditEvent }) => {
 
   const DeleteEvento = async (id: number): Promise<void> => {
     try {
-      //await DeleteEvento(id);
-      console.log(id)
+      await deleteEvent(id);
+      //console.log(id)
     } catch (error) {
       console.log('Erro: ', error);
     }
