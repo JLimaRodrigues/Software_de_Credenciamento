@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Evento } from "../../backend/db";
 import EventsTable from "./EventsTable";
 import './styles.css';
+import EventsForm from "./EventsForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Events: React.FC = () => {
     const [show, setShow] = useState(false);
@@ -25,8 +28,12 @@ const Events: React.FC = () => {
                 <li>E entre as opções dentro da lista terá um link para ir direto para o evento</li>
             </ul>
             <div className="tabela-eventos">
+                <button className="button-add-user" onClick={() => handleShow()}>
+                    <FontAwesomeIcon icon={faCalendarPlus} />
+                </button>
                 <EventsTable onEditEvent={handleShow}/>
             </div>
+            <EventsForm show={show} handleClose={handleClose} event={selectedEvent} />
         </>
     );
 }

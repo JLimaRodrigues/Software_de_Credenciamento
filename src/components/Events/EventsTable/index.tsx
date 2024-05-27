@@ -70,10 +70,10 @@ const EventsTable: React.FC<EventsTableProps> = ({ onEditEvent }) => {
               <td className="table-cell">{el.tipo_evento}</td>
               <td className="table-cell">{el.qtd_participantes}</td>
               <td className="table-cell" style={{ display: 'flex' }}>
-                <button onClick={() => onEditEvent(el)} style={{ backgroundColor: '#138dba'}} title='Editar Usuário'>
+                <button onClick={() => onEditEvent(el)} style={{ backgroundColor: '#138dba'}} title='Editar evento'>
                   <FontAwesomeIcon icon={faPen} />
                 </button>
-                <button onClick={() => DeleteEvento(el.id)} style={{ backgroundColor: '#ba132c'}} title='Excluir Usuário'>
+                <button onClick={() => DeleteEvento(el.id)} style={{ backgroundColor: '#ba132c'}} title='Excluir evento'>
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
               </td>
