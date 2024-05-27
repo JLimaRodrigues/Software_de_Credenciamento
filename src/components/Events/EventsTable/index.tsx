@@ -5,7 +5,7 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import TableFooter from '../../TableFooter';
 import useTable from '../../tools';
-import '../../Users/UsersTable/styles.css';
+import './styles.css';
 
 import { useLiveQuery } from 'dexie-react-hooks';
 
@@ -61,7 +61,7 @@ const EventsTable: React.FC<EventsTableProps> = ({ onEditEvent }) => {
           </tr>
         </thead>
         <tbody>
-          {slice.map((el: Evento) => (
+          {slice.length > 0 && ( slice.map((el: Evento) => (
             <tr className="table-rows-item" key={el.id}>
               <td className="table-cell">{el.id}</td>
               <td className="table-cell">{el.nome}</td>
@@ -78,7 +78,12 @@ const EventsTable: React.FC<EventsTableProps> = ({ onEditEvent }) => {
                 </button>
               </td>
             </tr>
-          ))}
+          )))}
+          {slice.length === 0 && (
+            <tr className="table-rows-item" >
+              <td className="table-cell" colSpan={7}>Não há registros</td>
+            </tr>
+          )}
         </tbody>
       </table>
       <TableFooter

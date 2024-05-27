@@ -61,7 +61,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ onEditUser }) => {
           </tr>
         </thead>
         <tbody>
-          {slice.map((el: Pessoa) => (
+        {slice.length > 0 && ( slice.map((el: Pessoa) => (
             <tr className="table-rows-item" key={el.id}>
               <td className="table-cell">{el.id}</td>
               <td className="table-cell">{el.nome}</td>
@@ -78,7 +78,12 @@ const UsersTable: React.FC<UsersTableProps> = ({ onEditUser }) => {
                 </button>
               </td>
             </tr>
-          ))}
+          )))}
+          {slice.length === 0 && (
+            <tr className="table-rows-item" >
+              <td className="table-cell" colSpan={7}>Não há registros</td>
+            </tr>
+          )}
         </tbody>
       </table>
       <TableFooter

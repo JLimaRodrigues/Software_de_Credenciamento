@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Evento } from "../../backend/db";
 import EventsTable from "./EventsTable";
+import './styles.css';
 
 const Events: React.FC = () => {
     const [show, setShow] = useState(false);
@@ -23,7 +24,9 @@ const Events: React.FC = () => {
                 <li>Aqui irei mostrar os uma lista de CRUD de todos os eventos cadastrados por data mais recente</li>
                 <li>E entre as opções dentro da lista terá um link para ir direto para o evento</li>
             </ul>
-            <EventsTable onEditEvent={handleShow}/>
+            <div className="tabela-eventos">
+                <EventsTable onEditEvent={handleShow}/>
+            </div>
         </>
     );
 }
