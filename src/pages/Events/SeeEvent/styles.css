@@ -1,0 +1,55 @@
+.see-event-page {
+    padding: 20px;
+}
+
+.back-button {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.event-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.event-column {
+    width: 45%;
+}
+
+.add-participant-section {
+    margin-bottom: 20px;
+}
+
+.add-participant-section form {
+    display: flex;
+    align-items: center;
+}
+
+.add-participant-section select {
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.error {
+    color: red;
+}
+
+.participants-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.participants-list th, .participants-list td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.participants-list th {
+    background-color: #f2f2f2;
+}

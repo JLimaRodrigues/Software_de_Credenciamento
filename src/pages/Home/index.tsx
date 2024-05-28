@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../Header';
-import Carrossel from '../../components/Carrossel';
+import EventsCard from '../../components/Events/EventsCard';
 
 const HomePage: React.FC = () => {
     return (
@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
                 <li>Histórico de ultimos eventos</li>
                 <li>gráfico comparando: quantidade de pessoas previstas e quantidade de pessoas presentes</li>
             </ul>
-            <Carrossel />
+            <EventsCard />
         </div>
     );
 }
