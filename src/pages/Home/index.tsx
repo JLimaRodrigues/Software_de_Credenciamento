@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from '../Header';
+import Carrossel from '../../components/Carrossel';
 
 const HomePage: React.FC = () => {
-
     return (
         <div>
             <Header />
@@ -11,8 +11,9 @@ const HomePage: React.FC = () => {
             <ul>
                 <li>Aqui irei mostrar os próximos eventos</li>
                 <li>Histórico de ultimos eventos</li>
-                <li>gráfico comparando: quantidade de pessoas previstas e quatidade de pessoas presentes</li>
+                <li>gráfico comparando: quantidade de pessoas previstas e quantidade de pessoas presentes</li>
             </ul>
+            <Carrossel />
         </div>
     );
 }
