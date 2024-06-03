@@ -1,0 +1,40 @@
+.participant-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.form-group {
+    flex: 1 1 calc(50% - 16px);
+}
+
+@media (max-width: 768px) {
+    .form-group {
+        flex: 1 1 100%;
+    }
+}
+
+.suggestions {
+    list-style-type: none;
+    list-style: none;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: initial;
+    position: absolute;
+    background-color: white;
+    z-index: 1000;
+}
+
+.suggestions li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+label.Active {
+    font-weight: bold;
+    color: #000;
+}

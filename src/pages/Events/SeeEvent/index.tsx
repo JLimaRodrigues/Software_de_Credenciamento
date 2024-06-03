@@ -4,13 +4,13 @@ import { db, Evento, ParticipanteEvento, Pessoa } from '../../../backend/db';
 import Header from '../../Header';
 import './styles.css';
 
+import ParticipantForm from './ParticipantForm';
+
 const SeeEventPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [event, setEvent] = useState<Evento | null>(null);
     const [participantes, setParticipantes] = useState<ParticipanteEvento[]>([]);
     const [pessoas, setPessoas] = useState<Pessoa[]>([]);
-    const [selectedPessoa, setSelectedPessoa] = useState<string>('');
-    const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,32 +38,6 @@ const SeeEventPage: React.FC = () => {
         fetchPessoas();
     }, [id]);
 
-    const handleAddParticipante = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!selectedPessoa) {
-            setError("Selecione uma pessoa");
-            return;
-        }
-        if (event) {
-            const novoParticipante: ParticipanteEvento = {
-                id: 0,
-                idPessoa: Number(selectedPessoa),
-                idEvento: event.id,
-                dataCadastro: new Date(),
-                cadastradoPor: "admin" // Altere conforme necessário
-            };
-            try {
-                await db.participantesEventos.add(novoParticipante);
-                setParticipantes([...participantes, novoParticipante]);
-                setSelectedPessoa('');
-                setError(null);
-            } catch (error) {
-                console.error("Erro ao adicionar participante:", error);
-                setError("Erro ao adicionar participante");
-            }
-        }
-    };
-
     if (!event) {
         return <p>Loading...</p>;
     }
@@ -84,19 +58,7 @@ const SeeEventPage: React.FC = () => {
                     <p><strong>Quantidade Máxima de Participantes:</strong> {event.qtd_participantes}</p>
                 </div>
             </div>
-            <div className="add-participant-section">
-                <h3>Adicionar Participante</h3>
-                <form onSubmit={handleAddParticipante}>
-                    <select value={selectedPessoa} onChange={(e) => setSelectedPessoa(e.target.value)}>
-                        <option value="">Selecione uma pessoa</option>
-                        {pessoas.map((pessoa) => (
-                            <option key={pessoa.id} value={pessoa.id}>{pessoa.nome}</option>
-                        ))}
-                    </select>
-                    <button type="submit">Adicionar</button>
-                </form>
-                {error && <p className="error">{error}</p>}
-            </div>
+            <ParticipantForm />
             <div className="participants-list">
                 <h3>Participantes</h3>
                 <table>

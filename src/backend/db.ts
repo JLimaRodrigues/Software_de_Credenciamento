@@ -22,6 +22,7 @@ export interface ParticipanteEvento {
   id: number;
   idPessoa: number;
   idEvento: number;
+  tipoParticipacao: string;
   dataCadastro: Date;
   cadastradoPor: string;
   entrada?: Date;
@@ -38,7 +39,7 @@ class MyDatabase extends Dexie {
     this.version(1).stores({
       pessoas: '++id, login, senha, nome, cpf',
       eventos: '++id, nome, empresa, endereco, tipo_evento, qtd_participantes',
-      participantesEventos: '++id, idPessoa, idEvento, dataCadastro, cadastradoPor, entrada, saída'
+      participantesEventos: '++id, idPessoa, idEvento, tipoParticipacao, dataCadastro, cadastradoPor, entrada, saida'
     });
     this.pessoas              = this.table('pessoas');
     this.eventos              = this.table('eventos');
