@@ -86,7 +86,7 @@ const ParticipantForm: React.FC = () => {
                             placeholder=" "
                             autoComplete="off"
                         />
-                        <label className={selectedPessoa ? 'Active' : ''} htmlFor="formPessoa">
+                        <label htmlFor="formPessoa">
                             Pessoa
                         </label>
                         {pessoaSuggestions.length > 0 && (
@@ -107,7 +107,7 @@ const ParticipantForm: React.FC = () => {
                             onChange={handleTextChange(setTipoParticipacao)}
                             placeholder=" "
                         />
-                        <label className={tipoParticipacao ? 'Active' : ''} htmlFor="formTipoParticipacao">
+                        <label htmlFor="formTipoParticipacao">
                             Tipo de Participação
                         </label>
                     </div>
@@ -116,10 +116,10 @@ const ParticipantForm: React.FC = () => {
                             type="text"
                             id="formCadastradoPor"
                             value={cadastradoPor}
-                            readOnly
-                            placeholder=" "
+                            readOnly={true}
+                            defaultValue={" "}
                         />
-                        <label className={cadastradoPor ? 'Active' : ''} htmlFor="formCadastradoPor">
+                        <label htmlFor="formCadastradoPor">
                             Cadastrado Por
                         </label>
                     </div>
@@ -131,7 +131,7 @@ const ParticipantForm: React.FC = () => {
                             onChange={handleTextChange(setEntrada)}
                             placeholder=" "
                         />
-                        <label className={entrada ? 'Active' : ''} htmlFor="formEntrada">
+                        <label htmlFor="formEntrada">
                             Entrada
                         </label>
                     </div>
@@ -143,7 +143,7 @@ const ParticipantForm: React.FC = () => {
                             onChange={handleTextChange(setSaida)}
                             placeholder=" "
                         />
-                        <label className={saida ? 'Active' : ''} htmlFor="formSaida">
+                        <label htmlFor="formSaida">
                             Saída
                         </label>
                     </div>

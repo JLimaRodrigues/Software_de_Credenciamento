@@ -128,7 +128,7 @@ const UserForm: React.FC<UserFormProps> = ({ show, handleClose, user }) => {
                                     onChange={handleTextChange(setName)}
                                     placeholder=" "
                                 />
-                                <label className={name ? 'Active' : ''} htmlFor="formName">
+                                <label htmlFor="formName">
                                     Name
                                 </label>
                             </div>
@@ -140,7 +140,7 @@ const UserForm: React.FC<UserFormProps> = ({ show, handleClose, user }) => {
                                     onChange={handleTextChange(setLogin)}
                                     placeholder=" "
                                 />
-                                <label className={login ? 'Active' : ''} htmlFor="formLogin">
+                                <label htmlFor="formLogin">
                                     Login
                                 </label>
                             </div>
@@ -152,7 +152,7 @@ const UserForm: React.FC<UserFormProps> = ({ show, handleClose, user }) => {
                                     onChange={handleTextChange(setEmail)}
                                     placeholder=" "
                                 />
-                                <label className={email ? 'Active' : ''} htmlFor="formEmail">
+                                <label htmlFor="formEmail">
                                     Email
                                 </label>
                             </div>
@@ -164,7 +164,7 @@ const UserForm: React.FC<UserFormProps> = ({ show, handleClose, user }) => {
                                     onChange={handleTextChange(setCpf)}
                                     placeholder=" "
                                 />
-                                <label className={cpf ? 'Active' : ''} htmlFor="formCpf">
+                                <label htmlFor="formCpf">
                                     CPF
                                 </label>
                             </div>
@@ -176,7 +176,7 @@ const UserForm: React.FC<UserFormProps> = ({ show, handleClose, user }) => {
                                     onChange={handleTextChange(setPassword)}
                                     placeholder=" "
                                 />
-                                <label className={password ? 'Active' : ''} htmlFor="formPassword">
+                                <label htmlFor="formPassword">
                                     Password
                                 </label>
                             </div>
@@ -188,7 +188,7 @@ const UserForm: React.FC<UserFormProps> = ({ show, handleClose, user }) => {
                                     onChange={handleTextChange(setConfirmPassword)}
                                     placeholder=" "
                                 />
-                                <label className={confirmPassword ? 'Active' : ''} htmlFor="formConfirmPassword">
+                                <label htmlFor="formConfirmPassword">
                                     Confirm Password
                                 </label>
                             </div>
