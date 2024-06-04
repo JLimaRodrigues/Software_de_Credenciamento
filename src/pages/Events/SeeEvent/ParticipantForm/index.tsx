@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { Pessoa, db } from "../../../../backend/db";
+import { Pessoa, ParticipanteEvento, db } from "../../../../backend/db";
 import { useLiveQuery } from "dexie-react-hooks";
 import './styles.css';
 
-const ParticipantForm: React.FC = () => {
+const ParticipantForm: React.FC<{ idEvento: number }> = ({ idEvento }) => {
     const [isAddParticipantSectionVisible, setAddParticipantSectionVisible] = useState(false);
     const [selectedPessoa, setSelectedPessoa] = useState('');
     const [tipoParticipacao, setTipoParticipacao] = useState('');
@@ -55,18 +55,36 @@ const ParticipantForm: React.FC = () => {
         setPessoaSuggestions([]);
     };
 
-    const handleAddParticipante = (event: React.FormEvent) => {
+    const handleAddParticipante = async (event: React.FormEvent) => {
         event.preventDefault();
         if (!selectedPessoa || !tipoParticipacao || !cadastradoPor) {
             setError('Preencha todos os campos obrigatórios.');
             return;
         }
-        // Aqui você pode adicionar a lógica para adicionar o participante ao banco de dados
-        setSelectedPessoa('');
-        setTipoParticipacao('');
-        setEntrada('');
-        setSaida('');
-        setError('');
+
+        const existsParticipantEvent = await db.participantesEventos.get({ idPessoa: selectedPessoaData?.id });
+
+        if(!existsParticipantEvent){
+            const participanteEvento: ParticipanteEvento = {
+                idPessoa: selectedPessoaData?.id || 0,
+                idEvento: idEvento,
+                tipoParticipacao: tipoParticipacao,
+                dataCadastro: new Date(),
+                cadastradoPor: cadastradoPor,
+                entrada: new Date(entrada)
+            }
+    
+            await db.participantesEventos.add(participanteEvento);
+
+            setSelectedPessoa('');
+            setTipoParticipacao('');
+            setEntrada('');
+            setSaida('');
+            setError('');
+        } else {
+            setError('Participante já cadastrado no evento.');
+            return;
+        }
     };
 
     return (

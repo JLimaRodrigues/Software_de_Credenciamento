@@ -19,7 +19,7 @@ export interface Evento {
 }
 
 export interface ParticipanteEvento {
-  id: number;
+  id?: number;
   idPessoa: number;
   idEvento: number;
   tipoParticipacao: string;

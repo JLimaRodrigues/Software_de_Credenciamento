@@ -5,12 +5,13 @@ import Header from '../../Header';
 import './styles.css';
 
 import ParticipantForm from './ParticipantForm';
+import { useLiveQuery } from 'dexie-react-hooks';
 
 const SeeEventPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [event, setEvent] = useState<Evento | null>(null);
-    const [participantes, setParticipantes] = useState<ParticipanteEvento[]>([]);
-    const [pessoas, setPessoas] = useState<Pessoa[]>([]);
+    //const [participantes, setParticipantes] = useState<ParticipanteEvento[]>([]);
+    //const [pessoas, setPessoas] = useState<Pessoa[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,22 +22,15 @@ const SeeEventPage: React.FC = () => {
             }
         };
 
-        const fetchParticipantes = async () => {
-            if (id) {
-                const participantes = await db.participantesEventos.where({ idEvento: Number(id) }).toArray();
-                setParticipantes(participantes);
-            }
-        };
-
-        const fetchPessoas = async () => {
-            const pessoas = await db.pessoas.toArray();
-            setPessoas(pessoas);
-        };
-
         fetchEvent();
-        fetchParticipantes();
-        fetchPessoas();
     }, [id]);
+
+    const participantes = useLiveQuery(() => db.participantesEventos.where({ idEvento: Number(id) }).toArray());
+    const pessoas = useLiveQuery(() => db.pessoas.toArray());
+
+    if (!participantes || !pessoas) return null;
+    console.log(participantes);
+    console.log(pessoas);
 
     if (!event) {
         return <p>Loading...</p>;
@@ -58,7 +52,7 @@ const SeeEventPage: React.FC = () => {
                     <p><strong>Quantidade Máxima de Participantes:</strong> {event.qtd_participantes}</p>
                 </div>
             </div>
-            <ParticipantForm />
+            <ParticipantForm idEvento={event.id} />
             <div className="participants-list">
                 <h3>Participantes</h3>
                 <table>
